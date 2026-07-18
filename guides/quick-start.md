@@ -1,97 +1,78 @@
 ---
-title: How to Deploy Your First Container with Nimbus CLI
-description: Deploy your first container using Nimbus CLI in just a few steps. Streamline your container management process today.
+title: How to Generate Typed Clients from Postgres Schemas
+description: Generate typed clients directly from Postgres schemas using SchemaType to enhance productivity and reduce errors in your applications.
 ---
 
-# How to Deploy Your First Container with Nimbus CLI
+# How to Generate Typed Clients from Postgres Schemas
 
-Follow these steps to deploy your first container using Nimbus CLI. This guide assumes you have Nimbus CLI installed and configured on your system.
+Follow these steps to create typed clients from your Postgres schemas using the SchemaType tool. This process enhances your development workflow and ensures type safety in your applications.
 
-## Step 1: Open Your Terminal
+## Prerequisites
 
-Launch your terminal application. Ensure you have access to Nimbus CLI by typing the following command:
+1. **Install Node.js**: Ensure you have Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
+2. **Postgres Database**: Have access to a Postgres database with the schemas you want to use.
+3. **SchemaType Account**: Sign up for an account at [SchemaType.com](https://schematype.com/) if you haven't already.
 
-```bash
-nimbus --version
-```
+## Steps to Generate Typed Clients
 
-If you see the version number, you are ready to proceed.
+1. **Install SchemaType CLI**  
+   Open your terminal and run the following command to install the SchemaType CLI globally:
+   ```bash
+   npm install -g schematype-cli
+   ```
 
-## Step 2: Log in to Your Container Registry
+2. **Authenticate with Your SchemaType Account**  
+   Log in to your SchemaType account using the CLI. Run:
+   ```bash
+   schematype login
+   ```
+   Follow the prompts to enter your credentials.
 
-Use the following command to log in to your container registry. Replace `your-registry-url` with the URL of your container registry.
+3. **Connect to Your Postgres Database**  
+   Create a configuration file named `schematype.config.js` in your project directory. Use the following template to connect to your Postgres database:
+   ```javascript
+   module.exports = {
+     database: {
+       type: 'postgres',
+       host: 'your-database-host',
+       port: 5432,
+       username: 'your-username',
+       password: 'your-password',
+       database: 'your-database-name',
+     },
+   };
+   ```
+   Replace the placeholders with your actual database connection details.
 
-```bash
-nimbus login your-registry-url
-```
+4. **Generate Typed Clients**  
+   Run the following command to generate typed clients from your Postgres schemas:
+   ```bash
+   schematype generate
+   ```
+   This command reads your database schema and creates TypeScript clients that reflect your data structure.
 
-Enter your username and password when prompted. Successful login will allow you to push and pull containers.
+5. **Review Generated Clients**  
+   Navigate to the `src/generated` directory in your project. Open the generated files to review the typed clients. Each table in your Postgres schema corresponds to a TypeScript class, complete with type definitions.
 
-## Step 3: Create a Dockerfile
+6. **Integrate Clients into Your Application**  
+   Import the generated clients into your application code. For example:
+   ```typescript
+   import { UserClient } from './src/generated/UserClient';
 
-In your project directory, create a file named `Dockerfile`. This file contains instructions for building your container image. Here’s a simple example:
+   const userClient = new UserClient();
+   const users = await userClient.findAll();
+   console.log(users);
+   ```
 
-```dockerfile
-FROM node:14
-WORKDIR /app
-COPY . .
-RUN npm install
-CMD ["node", "index.js"]
-```
+7. **Test Your Implementation**  
+   Run your application and test the integration of the typed clients. Ensure that type safety is enforced and that you can interact with your Postgres database without errors.
 
-This Dockerfile sets up a Node.js application. Adjust the content based on your application requirements.
+## Conclusion
 
-## Step 4: Build Your Container Image
+You have successfully generated typed clients from your Postgres schemas using SchemaType. This process improves your productivity and reduces the likelihood of errors in your database interactions.
 
-Run the following command to build your container image. Replace `your-image-name` with a name for your image.
+## Related
 
-```bash
-nimbus build -t your-image-name .
-```
-
-This command compiles the Dockerfile and creates a container image. Check for any errors during the build process.
-
-## Step 5: Push Your Image to the Registry
-
-After building the image, push it to your container registry using:
-
-```bash
-nimbus push your-registry-url/your-image-name
-```
-
-This command uploads your image to the specified registry. Verify the upload by checking your registry dashboard.
-
-## Step 6: Deploy Your Container
-
-Now, deploy your container using the following command. Replace `your-container-name` with a name for your container.
-
-```bash
-nimbus deploy your-registry-url/your-image-name --name your-container-name
-```
-
-This command starts your container based on the image you pushed. Monitor the deployment process for any issues.
-
-## Step 7: Verify Your Deployment
-
-To ensure your container is running, execute:
-
-```bash
-nimbus ps
-```
-
-This command lists all running containers. Check that your container appears in the list and is in a healthy state.
-
-## Step 8: Access Your Application
-
-If your application exposes a port, access it via your browser or API client. Use the appropriate URL, typically `http://localhost:your-port`.
-
-Congratulations! You have successfully deployed your first container using Nimbus CLI.
-
----
-
-### Related
-
-- [Nimbus CLI Documentation](https://nimbuscli.com/docs)
-- [Docker CLI Overview](https://docs.docker.com/cli/)
-- [Kubernetes Quick Start Guide](https://kubernetes.io/docs/setup/quick-start/)
-- [OpenShift Deployment Guide](https://docs.openshift.com/container-platform/latest/developing_apps/deployments/deployment.html)
+- [SchemaType Features](https://schematype.com/features)
+- [Getting Started with SchemaType](https://schematype.com/getting-started)
+- [Comparing SchemaType with Prisma and TypeORM](https://schematype.com/comparison)

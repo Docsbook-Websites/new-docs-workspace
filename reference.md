@@ -1,51 +1,48 @@
-```yaml
-title: "Nimbus CLI Command Reference for Container Deployment"
-description: "Master Nimbus CLI commands for efficient container deployment and management. Streamline your workflow with this comprehensive reference."
+---
+title: Postgres Schema Typing Tool Reference Guide
+description: Discover commands and parameters for the Postgres Schema Typing Tool to enhance your database interactions and ensure type safety.
 ---
 
-# Nimbus CLI Command Reference
+# Postgres Schema Typing Tool Reference
 
-This reference provides a detailed overview of the commands and parameters available in Nimbus CLI, designed for deploying containers efficiently.
+This reference guide provides a comprehensive overview of the commands and parameters available in the Postgres Schema Typing Tool. Use this guide to streamline your database interactions and enhance type safety in your applications.
 
-## Container Management Commands
+## Commands
 
-| Parameter/Command         | Type            | Description                                           | Example                          |
-|---------------------------|-----------------|-------------------------------------------------------|----------------------------------|
-| `nimbus deploy`           | Command         | Deploys a container from a specified image.          | `nimbus deploy my-app:latest`   |
-| `nimbus list`             | Command         | Lists all deployed containers.                        | `nimbus list`                    |
-| `nimbus remove`           | Command         | Removes a specified container from deployment.       | `nimbus remove my-app`           |
-| `nimbus status`           | Command         | Displays the status of a specified container.        | `nimbus status my-app`           |
+| Command               | Type          | Description                                         | Example                        |
+|----------------------|---------------|-----------------------------------------------------|--------------------------------|
+| `generate`           | Command       | Generates typed clients from the specified schema. | `schema-typing-tool generate`  |
+| `validate`           | Command       | Validates the schema against the defined types.    | `schema-typing-tool validate`  |
+| `migrate`            | Command       | Applies schema changes to the database.             | `schema-typing-tool migrate`   |
 
-## Image Management Commands
+## Parameters
 
-| Parameter/Command         | Type            | Description                                           | Example                          |
-|---------------------------|-----------------|-------------------------------------------------------|----------------------------------|
-| `nimbus pull`             | Command         | Pulls a container image from a registry.             | `nimbus pull my-image:latest`    |
-| `nimbus tag`              | Command         | Tags a local image with a new name.                  | `nimbus tag my-image:latest my-image:v1` |
-| `nimbus push`             | Command         | Pushes a local image to a specified registry.        | `nimbus push my-image:v1`        |
+### Generate Command Parameters
 
-## Configuration Commands
+| Parameter            | Type          | Description                                         | Example                        |
+|----------------------|---------------|-----------------------------------------------------|--------------------------------|
+| `--schema`           | String        | Specifies the Postgres schema to generate from.    | `--schema public`              |
+| `--output`           | String        | Defines the output directory for generated clients.  | `--output ./src/generated`     |
+| `--language`         | String        | Sets the programming language for the generated client. | `--language TypeScript`        |
 
-| Parameter/Command         | Type            | Description                                           | Example                          |
-|---------------------------|-----------------|-------------------------------------------------------|----------------------------------|
-| `nimbus config set`       | Command         | Sets a configuration parameter for Nimbus CLI.       | `nimbus config set region us-west-1` |
-| `nimbus config get`       | Command         | Retrieves the current configuration settings.         | `nimbus config get`              |
+### Validate Command Parameters
 
-## Networking Commands
+| Parameter            | Type          | Description                                         | Example                        |
+|----------------------|---------------|-----------------------------------------------------|--------------------------------|
+| `--schema`           | String        | Specifies the Postgres schema to validate.         | `--schema public`              |
+| `--strict`           | Boolean       | Enables strict validation mode.                     | `--strict true`                |
 
-| Parameter/Command         | Type            | Description                                           | Example                          |
-|---------------------------|-----------------|-------------------------------------------------------|----------------------------------|
-| `nimbus network create`   | Command         | Creates a new network for container communication.    | `nimbus network create my-network` |
-| `nimbus network list`     | Command         | Lists all available networks.                         | `nimbus network list`            |
-| `nimbus network remove`   | Command         | Removes a specified network.                          | `nimbus network remove my-network` |
+### Migrate Command Parameters
 
-## Volume Management Commands
+| Parameter            | Type          | Description                                         | Example                        |
+|----------------------|---------------|-----------------------------------------------------|--------------------------------|
+| `--schema`           | String        | Specifies the schema to migrate.                    | `--schema public`              |
+| `--version`          | String        | Sets the target version for the migration.          | `--version 1.0.0`              |
 
-| Parameter/Command         | Type            | Description                                           | Example                          |
-|---------------------------|-----------------|-------------------------------------------------------|----------------------------------|
-| `nimbus volume create`    | Command         | Creates a new volume for container storage.          | `nimbus volume create my-volume` |
-| `nimbus volume list`      | Command         | Lists all available volumes.                          | `nimbus volume list`             |
-| `nimbus volume remove`    | Command         | Removes a specified volume.                           | `nimbus volume remove my-volume`  |
+## Usage Tips
 
-Utilize this reference to enhance your deployment workflow with Nimbus CLI, ensuring efficient container management tailored for developers and DevOps engineers.
-```
+- Use the `generate` command to create typed clients that match your Postgres schema, enhancing type safety in your application.
+- Validate your schema regularly with the `validate` command to catch errors early in the development process.
+- Apply schema changes efficiently with the `migrate` command to keep your database in sync with your application.
+
+By leveraging the Postgres Schema Typing Tool, you can streamline your development workflow, reduce errors, and ensure that your database interactions are type-safe and efficient.
